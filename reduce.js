@@ -1,5 +1,6 @@
 // reduce → Reduz o array a um único valor (como soma, multiplicação, etc.).
 // reduce é usado quando queremos reduzir um array a um único valor, como uma soma total, média, produto, etc.
+// Quando queremos acumular ou combinar os elementos do array de forma customizada, geralmente resultando em um único valor ou um array modificado.
 
 // Somar todos os números de um array:
 const numeros = [10, 20, 30, 40];

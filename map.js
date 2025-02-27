@@ -1,4 +1,5 @@
 // map → Transforma cada elemento do array e retorna um novo array.
+// Quando queremos transformar cada item do array em um novo formato sem alterar a estrutura geral (mesmo número de elementos).
 
 // ✍️ Exercício 1
 // Dado o array de preços abaixo, use o map para aplicar um desconto de 10% a cada preço e exiba o novo array.

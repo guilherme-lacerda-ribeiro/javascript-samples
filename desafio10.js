@@ -13,6 +13,7 @@ const pedidos = [
     id: 2,
     cliente: "Ana Souza",
     produtos: [
+      { nome: "Teclado Mecânico", quantidade: 1, preco: 500 },
       { nome: "Teclado Mecânico", quantidade: 1, preco: 500 }
     ],
     status: "enviado",
@@ -180,11 +181,39 @@ exibeResultado('3 pedidos mais caros', pedidos
 )
 
 // 4️⃣ Criar um relatório com o total de vendas de cada produto, mas apenas considerando os pedidos enviados.
+const totalVendas = pedidos
+  .filter(({status}) => status === 'enviado')
+  .reduce((acc, pedido) => {
+    pedido.produtos.forEach(({nome, quantidade}) => {
+      if (!acc[nome]) acc[nome] = 0
+      acc[nome] += quantidade
+    })
+    return acc
+  }, {})
 
+exibeResultado('pedidos enviados, qtd total de produtos', totalVendas)
+exibeResultado('pedidos enviados, qtd total de produtos',
+  Object.entries(totalVendas).map(
+    ([nome, quantidade]) => `${nome}: ${quantidade} enviados`
+  )
+  // .join(', ')
+)
 
 // 5️⃣ Transformar o array de pedidos em um novo array contendo objetos apenas com o id e a data de cada pedido, removendo o restante das informações.
+exibeResultado('pedidos e datas',
+  pedidos.map(  ({id, data}) => ({id, data})  )
+)
 
 // 6️⃣ Verificar se todos os pedidos têm pelo menos um produto com preço acima de R$ 200.
+exibeResultado('todos pedidos com produtos caros',
+  pedidos.every(pedido => 
+    pedido.produtos.some(({preco}) => preco > 200)
+  )
+)
+
+const pedidoTemProdutoCaro = pedido => pedido.produtos.some(({preco}) => preco > 200)
+const todosPedidosTemProdutoCaro = pedidos.every(pedidoTemProdutoCaro)
+exibeResultado('todos pedidos com produtos caros - refatorado', todosPedidosTemProdutoCaro)
 
 // 7️⃣ Encontrar o primeiro pedido que contenha um produto chamado "Monitor".
 
