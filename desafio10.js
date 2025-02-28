@@ -1,5 +1,15 @@
 const pedidos = [
   {
+    id: 11,
+    cliente: "Carlos Silva",
+    produtos: [
+      { nome: "Notebook", quantidade: 12, preco: 3500 },
+      { nome: "Mouse", quantidade: 2, preco: 100 }
+    ],
+    status: "pendente",
+    data: "2024-02-01T14:30:00Z"
+  },
+  {
     id: 1,
     cliente: "Carlos Silva",
     produtos: [
@@ -278,3 +288,30 @@ exibeResultado('total de vendas sem cancelados - Refatorado', totalSemCancelados
 
 
 // 🔟 Contar quantos pedidos foram feitos por cada cliente, retornando um objeto no formato { "Carlos Silva": 2, "Ana Souza": 1, ... }.
+const pedidosPorClientes = pedidos =>
+  pedidos.reduce((acc, {cliente}) => {
+    if (!acc[cliente]) acc[cliente] = 0
+    acc[cliente] += 1
+    return acc
+  }, {})
+
+exibeResultado('pedidos por cliente', pedidosPorClientes(pedidos))
+
+
+const pedidosPorClientesRefatorado = pedidos =>
+  pedidos.reduce((acc, {cliente}) => {
+    acc[cliente] = (acc[cliente] ?? 0) + 1
+    return acc
+  }, {})
+
+exibeResultado('pedidos por cliente - Refatorado', pedidosPorClientesRefatorado(pedidos))
+
+
+// Utilizada a virgula como operador logico, semelhante ao exemplo abaixo.
+// let a = (1, 2, 3, 4); 
+// console.log(a); // Saída: 4
+const pedidosPorClientesRefatoradoArrowInline = pedidos =>
+  pedidos.reduce((acc, {cliente}) => (acc[cliente] = (acc[cliente] ?? 0) + 1, acc), {})
+
+exibeResultado('pedidos por cliente - Refatorado Inline', pedidosPorClientesRefatoradoArrowInline(pedidos))
+
