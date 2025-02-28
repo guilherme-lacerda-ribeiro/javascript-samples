@@ -216,8 +216,34 @@ const todosPedidosTemProdutoCaro = pedidos.every(pedidoTemProdutoCaro)
 exibeResultado('todos pedidos com produtos caros - refatorado', todosPedidosTemProdutoCaro)
 
 // 7️⃣ Encontrar o primeiro pedido que contenha um produto chamado "Monitor".
+exibeResultado('primeiro pedido com monitor', 
+  pedidos
+    .find(
+      ({produtos}) => produtos.find(({nome}) => nome === 'Monitor')
+    )
+)
+
+const temMonitor = pedido => pedido.produtos.some(({nome}) => nome === 'Monitor')
+const primeiroPedidoComMonitor = pedidos.find(temMonitor)
+exibeResultado('primeiro pedido com monitor - Refatorado', primeiroPedidoComMonitor)
 
 // 8️⃣ Criar uma string com os nomes de todos os clientes que fizeram pedidos, separados por vírgula.
+const listaClientesOrdenado = pedidos
+  .map(({cliente}) => cliente)
+  .sort()
+  .join(', ')
+exibeResultado('clientes', listaClientesOrdenado)
+
+// ✔ Evita nomes repetidos usando Set().
+// ✔ Melhora a ordenação com localeCompare() para respeitar acentos.
+// ✔ Código mais modular e reutilizável, pois extraímos a lógica para getClientesOrdenados().
+const getClientesOrdenados = pedidos => {
+  const clientesUnicos = [...new Set(pedidos.map(({ cliente }) => cliente))]; // Remove duplicatas
+  return clientesUnicos.sort((a, b) => a.localeCompare(b)).join(', ');
+};
+exibeResultado('clientes - Refatorado', getClientesOrdenados(pedidos));
+
+
 
 // 9️⃣ Remover os pedidos cancelados e calcular o valor total de todas as vendas feitas.
 
