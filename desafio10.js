@@ -246,5 +246,35 @@ exibeResultado('clientes - Refatorado', getClientesOrdenados(pedidos));
 
 
 // 9️⃣ Remover os pedidos cancelados e calcular o valor total de todas as vendas feitas.
+const valorTotalProdutos = produtos => {
+  return produtos
+    .reduce((acc, {quantidade, preco}) => {
+      acc += (quantidade * preco)
+      return acc
+    }, 0)
+}
+const totalSemCancelados = pedidos => {
+  return pedidos
+    .filter(({status}) => status !== 'cancelado')
+    .reduce((acc, {produtos}) => {
+      acc += valorTotalProdutos(produtos)
+      return acc
+    }, 0)
+}
+exibeResultado('total de vendas sem cancelados', totalSemCancelados(pedidos))
+
+// Refatorado para simplificar e deixar o código limpo
+const valorTotalProdutosRefatorado = produtos => 
+  produtos.reduce((acc, {quantidade, preco}) => acc + (quantidade * preco), 0)
+
+const totalSemCanceladosRefatorado = pedidos => 
+  pedidos
+    .filter(({status}) => status !== 'cancelado')
+    .reduce((acc, {produtos}) => acc + valorTotalProdutosRefatorado(produtos), 0)
+
+exibeResultado('total de vendas sem cancelados - Refatorado', totalSemCanceladosRefatorado(pedidos))
+
+
+
 
 // 🔟 Contar quantos pedidos foram feitos por cada cliente, retornando um objeto no formato { "Carlos Silva": 2, "Ana Souza": 1, ... }.
